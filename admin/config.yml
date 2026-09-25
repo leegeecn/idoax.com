@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: 你的GitHub用户名/idoax.com  # ⚠️ 替换为你的真实 GitHub 路径
+  repo: leegeecn/idoax.com  # ⚠️ 替换为你的真实 GitHub 路径
   branch: main
   base_url: https://idoax.com
   auth_endpoint: /api/auth
