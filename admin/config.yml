@@ -1,60 +1,851 @@
-backend:
-  name: github
-  repo: leegeecn/idoax.com/  # ⚠️ 替换为你的真实 GitHub 路径
-  branch: main
-  base_url: https://idoax.com
-  auth_endpoint: /api/auth
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>idoax.com · 我能 · 浩然 & 欣然</title>
+  <meta name="description" content="idoax.com — I do. a for Howard (浩然), x for Sienna (欣然). 守护陪伴，成就一生。Empowering Lifetime Legacies. Since 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
+    /* ===== 基础重置 & 字体 ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-media_folder: "public/uploads"
-public_folder: "/uploads"
+    html {
+      scroll-behavior: smooth;
+    }
 
-collections:
-  - name: "articles"
-    label: "📚 家族文章与记录"
-    folder: "content/articles"
-    create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
-    fields:
-      - { label: "标题", name: "title", widget: "string" }
-      - { label: "日期", name: "date", widget: "datetime" }
-      - { label: "分类", name: "category", widget: "select", options: ["浩然成长", "欣然成长", "家族寄语", "未来信件"] }
-      - { label: "封面", name: "cover", widget: "image", required: false }
-      - { label: "正文", name: "body", widget: "markdown" }
+    body {
+      background: #faf6f0;
+      background-image: 
+        radial-gradient(circle at 15% 15%, rgba(245, 230, 210, 0.6) 0%, transparent 45%),
+        radial-gradient(circle at 85% 75%, rgba(235, 220, 205, 0.5) 0%, transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 250, 245, 0.4) 0%, transparent 60%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #3a3229;
+      line-height: 1.55;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-  - name: "albums"
-    label: "🖼️ 珍贵相册"
-    folder: "content/albums"
-    create: true
-    slug: "{{year}}-{{slug}}"
-    fields:
-      - { label: "相册名称", name: "title", widget: "string" }
-      - { label: "拍摄日期", name: "date", widget: "datetime" }
-      - { label: "封面照片", name: "cover", widget: "image" }
-      - label: "照片合集"
-        name: "photos"
-        widget: "list"
-        fields:
-          - { label: "照片", name: "image", widget: "image" }
-          - { label: "描述", name: "caption", widget: "string", required: false }
+    /* ===== 主卡片 ===== */
+    .card {
+      max-width: 1020px;
+      width: 100%;
+      background: rgba(255, 253, 249, 0.94);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: 56px;
+      box-shadow: 
+        0 4px 12px rgba(120, 100, 80, 0.03),
+        0 24px 48px -12px rgba(100, 80, 60, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+        0 1px 2px rgba(0, 0, 0, 0.01);
+      padding: 3.8rem 3.5rem;
+      transition: box-shadow 0.3s ease;
+      border: 1px solid rgba(240, 230, 218, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
 
-  - name: "videos"
-    label: "🎥 视频影像"
-    folder: "content/videos"
-    create: true
-    slug: "{{year}}-{{slug}}"
-    fields:
-      - { label: "视频标题", name: "title", widget: "string" }
-      - { label: "录制日期", name: "date", widget: "datetime" }
-      - { label: "嵌入代码/播放链接", name: "embed_url", widget: "string", hint: "贴入 Bilibili/YouTube 或 MP4 链接" }
-      - { label: "背景故事", name: "story", widget: "markdown", required: false }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: -20%;
+      width: 80%;
+      height: 80%;
+      background: radial-gradient(circle, rgba(245, 225, 200, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
 
-  - name: "messages"
-    label: "💬 亲友寄语与留言"
-    folder: "content/messages"
-    create: true
-    slug: "msg-{{year}}{{month}}{{day}}-{{slug}}"
-    fields:
-      - { label: "留言人", name: "sender", widget: "string" }
-      - { label: "寄语对象", name: "target", widget: "select", options: ["给浩然 (Howard)", "给欣然 (Sienna)", "给全家"] }
-      - { label: "留言内容", name: "content", widget: "text" }
-      - { label: "附件照片/手写信扫描", name: "photo", widget: "image", required: false }
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      right: -10%;
+      width: 70%;
+      height: 70%;
+      background: radial-gradient(circle, rgba(235, 215, 195, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+      border-radius: 50%;
+    }
+
+    @media (max-width: 720px) {
+      .card {
+        padding: 2.8rem 1.8rem;
+        border-radius: 40px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 2rem 1.2rem;
+        border-radius: 32px;
+      }
+      body {
+        padding: 1rem 0.8rem;
+      }
+    }
+
+    /* ===== 域名标题区 ===== */
+    .domain-header {
+      text-align: center;
+      margin-bottom: 2.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .domain {
+      font-size: 4.2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.02em;
+      color: #4a3f33;
+    }
+
+    .ido {
+      color: #4a3f33;
+      font-weight: 800;
+      position: relative;
+    }
+
+    .ax {
+      background: linear-gradient(135deg, #B87A4E 0%, #D69E6B 55%, #E8BE92 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      position: relative;
+      display: inline-block;
+    }
+
+    .domain-underline {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #E8CDB0, #D6AE88, #E8CDB0, transparent);
+      margin: 0.9rem auto 1rem;
+      border-radius: 3px;
+      opacity: 0.85;
+    }
+
+    .domain-sub {
+      font-size: 1rem;
+      color: #7a6a58;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      letter-spacing: 0.2px;
+      font-weight: 450;
+    }
+
+    .domain-sub span {
+      background: rgba(250, 242, 232, 0.9);
+      padding: 0.3rem 1.1rem;
+      border-radius: 40px;
+      font-size: 0.9rem;
+      color: #8A5E3C;
+      font-weight: 500;
+      border: 1px solid rgba(235, 215, 190, 0.6);
+      box-shadow: 0 1px 3px rgba(120, 90, 60, 0.02);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .domain-sub span:hover {
+      background: #f7ede0;
+      border-color: #E0C8AC;
+    }
+
+    /* ===== 字母寓意区 ===== */
+    .explain-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2.2rem;
+      margin: 2.8rem 0 2.2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .explain-item {
+      flex: 1 1 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 1.8rem 1.2rem 1.5rem;
+      background: rgba(255, 252, 248, 0.85);
+      border-radius: 36px;
+      border: 1px solid rgba(240, 228, 214, 0.9);
+      box-shadow: 0 2px 8px rgba(120, 90, 60, 0.03);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+
+    .explain-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px -12px rgba(140, 100, 60, 0.14);
+      border-color: rgba(225, 205, 180, 0.8);
+    }
+
+    .letter-icon {
+      width: 88px;
+      height: 88px;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #fefcf9, #f7ede0);
+      border-radius: 32px;
+      box-shadow: 
+        0 6px 16px rgba(120, 90, 60, 0.03),
+        0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+        0 0 0 1px rgba(235, 218, 198, 0.6);
+      transition: box-shadow 0.25s ease, transform 0.25s ease;
+    }
+
+    .explain-item:hover .letter-icon {
+      box-shadow: 
+        0 10px 24px rgba(120, 90, 60, 0.06),
+        0 0 0 1px rgba(255, 255, 255, 0.9) inset,
+        0 0 0 1px rgba(215, 190, 160, 0.6);
+      transform: scale(1.02);
+    }
+
+    .arch-a svg,
+    .arc-x svg {
+      width: 56px;
+      height: 56px;
+      display: block;
+    }
+
+    .letter-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: #4a3f33;
+      margin-bottom: 0.1rem;
+      line-height: 1.2;
+    }
+
+    .letter-name {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #A07A56;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.7rem;
+    }
+
+    .letter-desc {
+      font-size: 0.92rem;
+      color: #6b5d4d;
+      max-width: 250px;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+
+    /* ===== 标语区块 ===== */
+    .slogan-block {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 1.8rem;
+      border-top: 1px solid rgba(235, 225, 212, 0.8);
+      padding-top: 2.8rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .slogan-card {
+      display: flex;
+      flex-direction: column;
+      background: rgba(255, 252, 248, 0.9);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 32px;
+      padding: 1.9rem 2.2rem;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      border: 1px solid rgba(240, 228, 214, 0.9);
+      box-shadow: 0 2px 6px rgba(120, 90, 60, 0.02);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slogan-card::before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: 0;
+      width: 3px;
+      height: 60%;
+      background: linear-gradient(to bottom, #E8CDB0, #D6AE88, #E8CDB0);
+      border-radius: 0 4px 4px 0;
+      opacity: 0.7;
+      transition: opacity 0.25s ease, height 0.25s ease;
+    }
+
+    .slogan-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px -10px rgba(140, 100, 60, 0.14);
+      border-color: rgba(225, 205, 180, 0.8);
+    }
+
+    .slogan-card:hover::before {
+      opacity: 1;
+      height: 70%;
+    }
+
+    .slogan-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      font-weight: 700;
+      color: #B08A64;
+      margin-bottom: 0.6rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slogan-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(215, 190, 160, 0.5), transparent);
+      margin-left: 4px;
+    }
+
+    .slogan-en {
+      font-size: 1.55rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: #4a3f33;
+      letter-spacing: -0.015em;
+    }
+
+    .slogan-cn {
+      font-size: 1rem;
+      color: #7a6a58;
+      margin-top: 0.35rem;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .slogan-meta {
+      font-size: 0.85rem;
+      color: #A89684;
+      margin-top: 0.85rem;
+      font-style: italic;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slogan-meta::before {
+      content: '✦';
+      font-style: normal;
+      font-size: 0.7rem;
+      color: #D6B896;
+    }
+
+    .professional .slogan-en {
+      background: linear-gradient(135deg, #A85E2E 0%, #C8874E 55%, #E0A870 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .professional::before {
+      background: linear-gradient(to bottom, #E0A870, #A85E2E, #E0A870);
+    }
+
+    .professional .slogan-label {
+      color: #B8763E;
+    }
+
+    /* ===== 内容模块样式 ===== */
+    .content-section {
+      margin-top: 3.5rem;
+      border-top: 1px solid rgba(235, 225, 212, 0.8);
+      padding-top: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #4a3f33;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .articles-grid, .gallery-grid, .messages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .article-item {
+      background: rgba(255, 252, 248, 0.9);
+      border: 1px solid rgba(240, 228, 214, 0.9);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(120, 90, 60, 0.02);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .article-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -8px rgba(140, 100, 60, 0.12);
+    }
+
+    .article-meta {
+      font-size: 0.8rem;
+      color: #A07A56;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .article-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #4a3f33;
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+    }
+
+    .article-body {
+      font-size: 0.9rem;
+      color: #6b5d4d;
+      line-height: 1.6;
+    }
+
+    .media-item {
+      background: rgba(255, 252, 248, 0.9);
+      border: 1px solid rgba(240, 228, 214, 0.9);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(120, 90, 60, 0.02);
+      transition: transform 0.25s ease;
+    }
+
+    .media-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .media-cover {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #f0e6d9;
+    }
+
+    .media-info {
+      padding: 1.2rem;
+    }
+
+    .media-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #4a3f33;
+      margin-bottom: 0.3rem;
+    }
+
+    .media-desc {
+      font-size: 0.85rem;
+      color: #7a6a58;
+    }
+
+    .message-item {
+      background: rgba(250, 242, 232, 0.7);
+      border: 1px dashed rgba(225, 205, 180, 0.8);
+      border-radius: 24px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .message-sender {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #B87A4E;
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .message-content {
+      font-size: 0.92rem;
+      color: #5a4f43;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .empty-tip {
+      color: #A89684;
+      font-size: 0.9rem;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
+    /* ===== 底部装饰 ===== */
+    .footer-note {
+      margin-top: 3.2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #A89684;
+      letter-spacing: 0.3px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      border-top: 1px dashed rgba(220, 205, 188, 0.6);
+      padding-top: 2.2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .since-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(250, 242, 232, 0.9);
+      padding: 0.45rem 1.4rem;
+      border-radius: 50px;
+      color: #8A5E3C;
+      font-weight: 500;
+      font-size: 0.85rem;
+      border: 1px solid rgba(235, 215, 190, 0.6);
+      box-shadow: 0 2px 6px rgba(120, 90, 60, 0.02);
+      transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .since-badge:hover {
+      background: #f7ede0;
+      border-color: #E0C8AC;
+    }
+
+    .heart {
+      color: #C47B6B;
+      font-size: 0.9rem;
+    }
+
+    .footer-signature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #A89684;
+      font-weight: 400;
+    }
+
+    .footer-signature .dot {
+      width: 3px;
+      height: 3px;
+      background: #D6C8B8;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .footer-email {
+      color: #8A5E3C;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .footer-email:hover {
+      color: #B87A4E;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .domain { font-size: 3rem; }
+      .domain-underline { width: 60px; margin: 0.7rem auto 0.8rem; }
+      .slogan-en { font-size: 1.3rem; }
+      .slogan-card { padding: 1.5rem 1.5rem; border-radius: 26px; }
+      .explain-grid { gap: 1.2rem; }
+      .letter-icon { width: 72px; height: 72px; border-radius: 26px; }
+      .letter-icon svg { width: 46px; height: 46px; }
+      .letter-title { font-size: 1.55rem; }
+      .slogan-meta { font-size: 0.8rem; }
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(16px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .domain-header, .explain-item, .slogan-card, .content-section, .footer-note {
+      animation: fadeUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <!-- 顶部域名品牌展示 -->
+    <div class="domain-header">
+      <div class="domain">
+        <span class="ido">i do</span><span class="ax">ax.com</span>
+      </div>
+      <div class="domain-underline"></div>
+      <div class="domain-sub">
+        <span>i do = 我能</span>
+        <span>a · 浩然</span>
+        <span>x · 欣然</span>
+      </div>
+    </div>
+
+    <div class="explain-grid">
+      <div class="explain-item">
+        <div class="letter-icon arch-a">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="archGrad" x1="10" y1="30" x2="50" y2="54" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#B87A4E" />
+                <stop offset="100%" stop-color="#D69E6B" />
+              </linearGradient>
+            </defs>
+            <rect x="10" y="28" width="9" height="26" rx="4" fill="url(#archGrad)" />
+            <rect x="41" y="28" width="9" height="26" rx="4" fill="url(#archGrad)" />
+            <path d="M14.5 30 C14.5 14, 45.5 14, 45.5 30" stroke="url(#archGrad)" stroke-width="9" stroke-linecap="round" fill="none" />
+            <rect x="25" y="37" width="10" height="5" rx="2.5" fill="#E0B88C" />
+          </svg>
+        </div>
+        <div class="letter-title">a</div>
+        <div class="letter-name">Howard · 浩然</div>
+        <div class="letter-desc">坚固、平稳的垂直拱门结构，象征哥哥作为家族支柱的稳重与守护。</div>
+      </div>
+
+      <div class="explain-item">
+        <div class="letter-icon arc-x">
+          <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="xGrad1" x1="8" y1="50" x2="30" y2="12" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#C8874E" />
+                <stop offset="100%" stop-color="#E8BE92" />
+              </linearGradient>
+              <linearGradient id="xGrad2" x1="8" y1="12" x2="52" y2="48" gradientUnits="userSpaceOnUse">
+                <stop offset="0%" stop-color="#D69E6B" />
+                <stop offset="100%" stop-color="#F0D4B0" />
+              </linearGradient>
+            </defs>
+            <path d="M8 50 Q18 30, 30 12 Q42 30, 52 50" stroke="url(#xGrad1)" stroke-width="7" stroke-linecap="round" fill="none" />
+            <path d="M8 12 Q18 30, 30 48 Q42 30, 52 12" stroke="url(#xGrad2)" stroke-width="7" stroke-linecap="round" fill="none" />
+            <circle cx="30" cy="30" r="3.5" fill="#8A5E3C" />
+            <circle cx="30" cy="30" r="1.5" fill="#FFFFFF" opacity="0.85" />
+          </svg>
+        </div>
+        <div class="letter-title">x</div>
+        <div class="letter-name">Sienna · 欣然</div>
+        <div class="letter-desc">向上延伸、开放流动的双弧线结构，象征妹妹灵动、探索与无限的可能性。</div>
+      </div>
+    </div>
+
+    <div class="slogan-block">
+      <div class="slogan-card">
+        <div class="slogan-label">Master Slogan</div>
+        <div class="slogan-en">Empowering Lifetime Legacies. Since 2026.</div>
+        <div class="slogan-cn">守护陪伴，成就一生。</div>
+        <div class="slogan-meta">终身制数字资产 · 从2026年启动的跨时代家族礼物</div>
+      </div>
+
+      <div class="slogan-card">
+        <div class="slogan-label">Childhood & Family</div>
+        <div class="slogan-en">I do love, I do support, I do believe.</div>
+        <div class="slogan-cn">爱其所爱，予其所向，信其无限。</div>
+        <div class="slogan-meta">拆解 I do（父母的承诺） · 首页导语 / 成长日志温情寄语</div>
+      </div>
+
+      <div class="slogan-card professional">
+        <div class="slogan-label">Professional / Future</div>
+        <div class="slogan-en">Where Passion Meets Infinite Possibilities.</div>
+        <div class="slogan-cn">激情所至，无限可能。</div>
+        <div class="slogan-meta">X-factor 无限因子 · 科技感与个人品牌气场</div>
+      </div>
+    </div>
+
+    <!-- 动态模块 1：成长记录 -->
+    <div class="content-section">
+      <div class="section-title">
+        <span>📖</span> 成长记录
+      </div>
+      <div class="articles-grid" id="articles-container">
+        <div class="empty-tip">正在拉取最新数据...</div>
+      </div>
+    </div>
+
+    <!-- 动态模块 2：影像点滴 -->
+    <div class="content-section">
+      <div class="section-title">
+        <span>🖼️</span> 影像点滴
+      </div>
+      <div class="gallery-grid" id="gallery-container">
+        <div class="empty-tip">正在拉取精彩瞬间...</div>
+      </div>
+    </div>
+
+    <!-- 动态模块 3：未来寄语 -->
+    <div class="content-section">
+      <div class="section-title">
+        <span>💬</span> 未来寄语
+      </div>
+      <div class="messages-grid" id="messages-container">
+        <div class="empty-tip">正在拉取长辈祝福...</div>
+      </div>
+    </div>
+
+    <!-- 底部与联系信息 -->
+    <div class="footer-note">
+      <div class="since-badge">
+        <span>⏳</span> Since 2026 · 终身数字资产
+      </div>
+      <div class="footer-signature">
+        <span>idoax.com</span>
+        <span class="dot"></span>
+        <span>for Howard & Sienna</span>
+      </div>
+      <div style="display: flex; gap: 0.6rem; align-items: center;">
+        <span class="heart">❤️</span>
+        <span style="color: #B8A898; font-weight: 400;">i do · a · x</span>
+      </div>
+      <div style="margin-top: 0.4rem;">
+        <a href="mailto:admin@idoax.com" class="footer-email">✉️ admin@idoax.com</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // GitHub API 绑定参数
+    const GITHUB_USER = 'leegeecn';
+    const GITHUB_REPO = 'idoax.com';
+
+    async function fetchRepoFolder(folderPath) {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${folderPath}`);
+        if (!res.ok) return [];
+        const files = await res.json();
+        const items = [];
+        for (const file of files) {
+          if (file.name.endsWith('.md') || file.name.endsWith('.json')) {
+            const rawRes = await fetch(file.download_url);
+            const text = await rawRes.text();
+            items.push(parseFrontmatter(text));
+          }
+        }
+        return items;
+      } catch (err) {
+        console.error(err);
+        return [];
+      }
+    }
+
+    function parseFrontmatter(text) {
+      const result = { body: '' };
+      const parts = text.split('---');
+      if (parts.length >= 3) {
+        const header = parts[1];
+        result.body = parts.slice(2).join('---').trim();
+        header.split('\n').forEach(line => {
+          const [key, ...val] = line.split(':');
+          if (key && val.length) {
+            result[key.trim()] = val.join(':').trim().replace(/^["']|["']$/g, '');
+          }
+        });
+      } else {
+        result.body = text;
+      }
+      return result;
+    }
+
+    async function loadArticles() {
+      const container = document.getElementById('articles-container');
+      const articles = await fetchRepoFolder('content/articles');
+      if (articles.length === 0) {
+        container.innerHTML = '<div class="empty-tip">岁月刚好，静待第一篇故事写入...</div>';
+        return;
+      }
+      container.innerHTML = articles.map(art => `
+        <div class="article-item">
+          <div class="article-meta">
+            <span>${art.date ? art.date.split('T')[0] : '近日'}</span>
+            <span>${art.category || '记录'}</span>
+          </div>
+          <div class="article-title">${art.title || '未命名记录'}</div>
+          <div class="article-body">${art.body.substring(0, 80)}${art.body.length > 80 ? '...' : ''}</div>
+        </div>
+      `).join('');
+    }
+
+    async function loadGallery() {
+      const container = document.getElementById('gallery-container');
+      const albums = await fetchRepoFolder('content/albums');
+      const videos = await fetchRepoFolder('content/videos');
+      const mediaList = [...albums, ...videos];
+
+      if (mediaList.length === 0) {
+        container.innerHTML = '<div class="empty-tip">相册和视频珍藏库准备中...</div>';
+        return;
+      }
+
+      container.innerHTML = mediaList.map(item => `
+        <div class="media-item">
+          ${item.cover ? `<img src="${item.cover}" class="media-cover" alt="封面">` : '<div class="media-cover" style="display:flex;align-items:center;justify-content:center;color:#b87a4e;">📷 精彩画面</div>'}
+          <div class="media-info">
+            <div class="media-title">${item.title || '美好瞬间'}</div>
+            <div class="media-desc">${item.date ? item.date.split('T')[0] : ''}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function loadMessages() {
+      const container = document.getElementById('messages-container');
+      const messages = await fetchRepoFolder('content/messages');
+      if (messages.length === 0) {
+        container.innerHTML = '<div class="empty-tip">等待长辈与亲友的第一份寄语...</div>';
+        return;
+      }
+      container.innerHTML = messages.map(msg => `
+        <div class="message-item">
+          <div class="message-sender">
+            <span>${msg.sender || '亲友'}</span>
+            <span>${msg.target || '给孩子们'}</span>
+          </div>
+          <div class="message-content">“${msg.content || msg.body || ''}”</div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadArticles();
+      loadGallery();
+      loadMessages();
+    });
+  </script>
+</body>
+</html>
