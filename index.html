@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -383,6 +383,143 @@
       color: #B8763E;
     }
 
+    /* ===== 新增三大内容板块通用样式 ===== */
+    .content-section {
+      margin-top: 3.5rem;
+      border-top: 1px solid rgba(235, 225, 212, 0.8);
+      padding-top: 2.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #4a3f33;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title span.icon {
+      font-size: 1.3rem;
+    }
+
+    /* 静态卡片网格 */
+    .articles-grid, .gallery-grid, .messages-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    /* 成长记录卡片 */
+    .article-item {
+      background: rgba(255, 252, 248, 0.9);
+      border: 1px solid rgba(240, 228, 214, 0.9);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 6px rgba(120, 90, 60, 0.02);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .article-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px -8px rgba(140, 100, 60, 0.12);
+    }
+
+    .article-meta {
+      font-size: 0.8rem;
+      color: #A07A56;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .article-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #4a3f33;
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+    }
+
+    .article-body {
+      font-size: 0.9rem;
+      color: #6b5d4d;
+      line-height: 1.6;
+    }
+
+    /* 影像点滴卡片 */
+    .media-item {
+      background: rgba(255, 252, 248, 0.9);
+      border: 1px solid rgba(240, 228, 214, 0.9);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 2px 6px rgba(120, 90, 60, 0.02);
+      transition: transform 0.25s ease;
+    }
+
+    .media-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .media-cover {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      background: #f0e6d9;
+    }
+
+    .media-info {
+      padding: 1.2rem;
+    }
+
+    .media-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #4a3f33;
+      margin-bottom: 0.3rem;
+    }
+
+    .media-desc {
+      font-size: 0.85rem;
+      color: #7a6a58;
+    }
+
+    /* 未来寄语卡片 */
+    .message-item {
+      background: rgba(250, 242, 232, 0.7);
+      border: 1px dashed rgba(225, 205, 180, 0.8);
+      border-radius: 24px;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    .message-sender {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #B87A4E;
+      margin-bottom: 0.4rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .message-content {
+      font-size: 0.92rem;
+      color: #5a4f43;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .empty-tip {
+      color: #A89684;
+      font-size: 0.9rem;
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 2rem 0;
+    }
+
     /* ===== 底部装饰 ===== */
     .footer-note {
       margin-top: 3.2rem;
@@ -477,26 +614,6 @@
       }
     }
 
-    @media (max-width: 420px) {
-      .domain {
-        font-size: 2.4rem;
-      }
-      .domain-sub span {
-        font-size: 0.78rem;
-        padding: 0.2rem 0.8rem;
-      }
-      .slogan-en {
-        font-size: 1.1rem;
-      }
-      .slogan-cn {
-        font-size: 0.9rem;
-      }
-      .explain-item {
-        padding: 1.4rem 0.8rem 1.2rem;
-        border-radius: 28px;
-      }
-    }
-
     /* 微妙进入动画 */
     @keyframes fadeUp {
       0% { opacity: 0; transform: translateY(16px); }
@@ -506,23 +623,9 @@
     .domain-header,
     .explain-item,
     .slogan-card,
+    .content-section,
     .footer-note {
       animation: fadeUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-    }
-
-    .explain-item:nth-child(1) { animation-delay: 0.05s; }
-    .explain-item:nth-child(2) { animation-delay: 0.12s; }
-    .slogan-card:nth-child(1) { animation-delay: 0.1s; }
-    .slogan-card:nth-child(2) { animation-delay: 0.18s; }
-    .slogan-card:nth-child(3) { animation-delay: 0.26s; }
-    .footer-note { animation-delay: 0.35s; }
-
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-      }
     }
   </style>
 </head>
@@ -621,6 +724,36 @@
       </div>
     </div>
 
+    <!-- ===== 新增模块 1：成长记录（家族文章） ===== -->
+    <div class="content-section">
+      <div class="section-title">
+        <span class="icon">📖</span> 成长记录
+      </div>
+      <div class="articles-grid" id="articles-container">
+        <div class="empty-tip">正在读取最新成长记录...</div>
+      </div>
+    </div>
+
+    <!-- ===== 新增模块 2：影像点滴（珍贵相册与视频） ===== -->
+    <div class="content-section">
+      <div class="section-title">
+        <span class="icon">🖼️</span> 影像点滴
+      </div>
+      <div class="gallery-grid" id="gallery-container">
+        <div class="empty-tip">正在读取精彩时光...</div>
+      </div>
+    </div>
+
+    <!-- ===== 新增模块 3：未来寄语（亲友祝福） ===== -->
+    <div class="content-section">
+      <div class="section-title">
+        <span class="icon">💬</span> 未来寄语
+      </div>
+      <div class="messages-grid" id="messages-container">
+        <div class="empty-tip">正在读取温暖寄语...</div>
+      </div>
+    </div>
+
     <!-- 底部小字：年份与定制感 -->
     <div class="footer-note">
       <div class="since-badge">
@@ -637,5 +770,121 @@
       </div>
     </div>
   </div>
+
+  <!-- ===== 前端自动读取 GitHub 内容数据 ===== -->
+  <script>
+    // ⚠️ 请改为你的真实 GitHub 用户名
+    const GITHUB_USER = 'YOUR_GITHUB_USERNAME';
+    const GITHUB_REPO = 'idoax-site';
+
+    // 通用抓取 JSON/Markdown 数据函数
+    async function fetchRepoFolder(folderPath) {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${folderPath}`);
+        if (!res.ok) return [];
+        const files = await res.json();
+        const items = [];
+        for (const file of files) {
+          if (file.name.endsWith('.md') || file.name.endsWith('.json')) {
+            const rawRes = await fetch(file.download_url);
+            const text = await rawRes.text();
+            items.push(parseFrontmatter(text));
+          }
+        }
+        return items;
+      } catch (err) {
+        console.error(err);
+        return [];
+      }
+    }
+
+    // 简单 Frontmatter 解析工具
+    function parseFrontmatter(text) {
+      const result = { body: '' };
+      const parts = text.split('---');
+      if (parts.length >= 3) {
+        const header = parts[1];
+        result.body = parts.slice(2).join('---').trim();
+        header.split('\n').forEach(line => {
+          const [key, ...val] = line.split(':');
+          if (key && val.length) {
+            result[key.trim()] = val.join(':').trim().replace(/^["']|["']$/g, '');
+          }
+        });
+      } else {
+        result.body = text;
+      }
+      return result;
+    }
+
+    // 渲染成长记录
+    async function loadArticles() {
+      const container = document.getElementById('articles-container');
+      const articles = await fetchRepoFolder('content/articles');
+      if (articles.length === 0) {
+        container.innerHTML = '<div class="empty-tip">岁月刚好，静待第一篇故事写入...</div>';
+        return;
+      }
+      container.innerHTML = articles.map(art => `
+        <div class="article-item">
+          <div class="article-meta">
+            <span>${art.date ? art.date.split('T')[0] : '近日'}</span>
+            <span>${art.category || '记录'}</span>
+          </div>
+          <div class="article-title">${art.title || '未命名记录'}</div>
+          <div class="article-body">${art.body.substring(0, 80)}${art.body.length > 80 ? '...' : ''}</div>
+        </div>
+      `).join('');
+    }
+
+    // 渲染影像点滴
+    async function loadGallery() {
+      const container = document.getElementById('gallery-container');
+      const albums = await fetchRepoFolder('content/albums');
+      const videos = await fetchRepoFolder('content/videos');
+      const mediaList = [...albums, ...videos];
+
+      if (mediaList.length === 0) {
+        container.innerHTML = '<div class="empty-tip">相册和视频珍藏库准备中...</div>';
+        return;
+      }
+
+      container.innerHTML = mediaList.map(item => `
+        <div class="media-item">
+          ${item.cover ? `<img src="${item.cover}" class="media-cover" alt="封面">` : '<div class="media-cover" style="display:flex;align-items:center;justify-content:center;color:#b87a4e;">📷 精彩画面</div>'}
+          <div class="media-info">
+            <div class="media-title">${item.title || '美好瞬间'}</div>
+            <div class="media-desc">${item.date ? item.date.split('T')[0] : ''}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 渲染未来寄语
+    async function loadMessages() {
+      const container = document.getElementById('messages-container');
+      const messages = await fetchRepoFolder('content/messages');
+      if (messages.length === 0) {
+        container.innerHTML = '<div class="empty-tip">等待长辈与亲友的第一份寄语...</div>';
+        return;
+      }
+      container.innerHTML = messages.map(msg => `
+        <div class="message-item">
+          <div class="message-sender">
+            <span>${msg.sender || '亲友'}</span>
+            <span>${msg.target || '给孩子们'}</span>
+          </div>
+          <div class="message-content">“${msg.content || msg.body || ''}”</div>
+        </div>
+      `).join('');
+    }
+
+    // 页面加载完成后加载数据
+    document.addEventListener('DOMContentLoaded', () => {
+      loadArticles();
+      loadGallery();
+      loadMessages();
+    });
+  </script>
 </body>
 </html>
