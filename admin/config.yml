@@ -1,0 +1,60 @@
+backend:
+  name: github
+  repo: 你的GitHub用户名/idoax-site  # ⚠️ 替换为你的真实 GitHub 路径
+  branch: main
+  base_url: https://idoax.com
+  auth_endpoint: /api/auth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "articles"
+    label: "📚 家族文章与记录"
+    folder: "content/articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "标题", name: "title", widget: "string" }
+      - { label: "日期", name: "date", widget: "datetime" }
+      - { label: "分类", name: "category", widget: "select", options: ["浩然成长", "欣然成长", "家族寄语", "未来信件"] }
+      - { label: "封面", name: "cover", widget: "image", required: false }
+      - { label: "正文", name: "body", widget: "markdown" }
+
+  - name: "albums"
+    label: "🖼️ 珍贵相册"
+    folder: "content/albums"
+    create: true
+    slug: "{{year}}-{{slug}}"
+    fields:
+      - { label: "相册名称", name: "title", widget: "string" }
+      - { label: "拍摄日期", name: "date", widget: "datetime" }
+      - { label: "封面照片", name: "cover", widget: "image" }
+      - label: "照片合集"
+        name: "photos"
+        widget: "list"
+        fields:
+          - { label: "照片", name: "image", widget: "image" }
+          - { label: "描述", name: "caption", widget: "string", required: false }
+
+  - name: "videos"
+    label: "🎥 视频影像"
+    folder: "content/videos"
+    create: true
+    slug: "{{year}}-{{slug}}"
+    fields:
+      - { label: "视频标题", name: "title", widget: "string" }
+      - { label: "录制日期", name: "date", widget: "datetime" }
+      - { label: "嵌入代码/播放链接", name: "embed_url", widget: "string", hint: "贴入 Bilibili/YouTube 或 MP4 链接" }
+      - { label: "背景故事", name: "story", widget: "markdown", required: false }
+
+  - name: "messages"
+    label: "💬 亲友寄语与留言"
+    folder: "content/messages"
+    create: true
+    slug: "msg-{{year}}{{month}}{{day}}-{{slug}}"
+    fields:
+      - { label: "留言人", name: "sender", widget: "string" }
+      - { label: "寄语对象", name: "target", widget: "select", options: ["给浩然 (Howard)", "给欣然 (Sienna)", "给全家"] }
+      - { label: "留言内容", name: "content", widget: "text" }
+      - { label: "附件照片/手写信扫描", name: "photo", widget: "image", required: false }
