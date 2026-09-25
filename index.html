@@ -383,7 +383,7 @@
       color: #B8763E;
     }
 
-    /* ===== 内容模块通用样式 ===== */
+    /* ===== 内容模块样式 ===== */
     .content-section {
       margin-top: 3.5rem;
       border-top: 1px solid rgba(235, 225, 212, 0.8);
@@ -408,7 +408,6 @@
       gap: 1.5rem;
     }
 
-    /* 成长记录卡片 */
     .article-item {
       background: rgba(255, 252, 248, 0.9);
       border: 1px solid rgba(240, 228, 214, 0.9);
@@ -445,7 +444,6 @@
       line-height: 1.6;
     }
 
-    /* 影像点滴卡片 */
     .media-item {
       background: rgba(255, 252, 248, 0.9);
       border: 1px solid rgba(240, 228, 214, 0.9);
@@ -482,7 +480,6 @@
       color: #7a6a58;
     }
 
-    /* 未来寄语卡片 */
     .message-item {
       background: rgba(250, 242, 232, 0.7);
       border: 1px dashed rgba(225, 205, 180, 0.8);
@@ -573,7 +570,6 @@
       display: inline-block;
     }
 
-    /* ===== 响应式动画 ===== */
     @media (max-width: 640px) {
       .domain { font-size: 3rem; }
       .domain-underline { width: 60px; margin: 0.7rem auto 0.8rem; }
@@ -598,7 +594,6 @@
 </head>
 <body>
   <div class="card">
-    <!-- 1. 域名 + 品牌定位 -->
     <div class="domain-header">
       <div class="domain">
         <span class="ido">i do</span><span class="ax">ax</span>
@@ -611,7 +606,6 @@
       </div>
     </div>
 
-    <!-- 2. 字母寓意: A 与 X 结构解构 -->
     <div class="explain-grid">
       <div class="explain-item">
         <div class="letter-icon arch-a">
@@ -658,7 +652,6 @@
       </div>
     </div>
 
-    <!-- 3. Slogan 品牌标语 -->
     <div class="slogan-block">
       <div class="slogan-card">
         <div class="slogan-label">Master Slogan</div>
@@ -682,7 +675,7 @@
       </div>
     </div>
 
-    <!-- 4. 模块 1：成长记录（对应后台文章） -->
+    <!-- 动态模块 1：成长记录 -->
     <div class="content-section">
       <div class="section-title">
         <span>📖</span> 成长记录
@@ -692,7 +685,7 @@
       </div>
     </div>
 
-    <!-- 5. 模块 2：影像点滴（对应后台相册与视频） -->
+    <!-- 动态模块 2：影像点滴 -->
     <div class="content-section">
       <div class="section-title">
         <span>🖼️</span> 影像点滴
@@ -702,7 +695,7 @@
       </div>
     </div>
 
-    <!-- 6. 模块 3：未来寄语（对应后台亲友留言） -->
+    <!-- 动态模块 3：未来寄语 -->
     <div class="content-section">
       <div class="section-title">
         <span>💬</span> 未来寄语
@@ -712,7 +705,6 @@
       </div>
     </div>
 
-    <!-- 7. 页脚设计 -->
     <div class="footer-note">
       <div class="since-badge">
         <span>⏳</span> Since 2026 · 终身数字资产
@@ -729,22 +721,14 @@
     </div>
   </div>
 
-  <!-- ===== 自动拉取 GitHub 后台数据解析脚本 ===== -->
   <script>
-    // GitHub API 配置
-    const GITHUB_REPO = 'idoax-site';
-    
-    // 获取当前域名匹配的用户名或提取全路径
-    async function getRepoUser() {
-      // 优先从包含本文件的 URL 获取当前用户（确保自动适配不同账号名）
-      const pathParts = window.location.pathname.split('/');
-      return 'idoax-site'; // 请在此处替换为你的真实 GitHub 用户名，例如 'jacksmith'
-    }
+    // GitHub API 绑定个人与仓库参数
+    const GITHUB_USER = 'leegeecn';
+    const GITHUB_REPO = 'idoax.com';
 
     async function fetchRepoFolder(folderPath) {
       try {
-        const username = document.documentElement.getAttribute('data-gh-user') || window.GITHUB_USER_NAME;
-        const res = await fetch(`https://api.github.com/repos/${username}/${GITHUB_REPO}/contents/${folderPath}`);
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${folderPath}`);
         if (!res.ok) return [];
         const files = await res.json();
         const items = [];
@@ -838,9 +822,6 @@
         </div>
       `).join('');
     }
-
-    // 初始化：请在此全局变量填入你的 GitHub 用户名
-    window.GITHUB_USER_NAME = 'leegeecn'; // 👈 ⚠️ 改为你的 GitHub 账号名
 
     document.addEventListener('DOMContentLoaded', () => {
       loadArticles();
