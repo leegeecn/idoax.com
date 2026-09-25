@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>idoax · 我能 · 浩然 & 欣然</title>
+  <title>idoax.com · 我能 · 浩然 & 欣然</title>
   <meta name="description" content="idoax.com — I do. a for Howard (浩然), x for Sienna (欣然). 守护陪伴，成就一生。Empowering Lifetime Legacies. Since 2026.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -570,6 +570,19 @@
       display: inline-block;
     }
 
+    .footer-email {
+      color: #8A5E3C;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .footer-email:hover {
+      color: #B87A4E;
+      text-decoration: underline;
+    }
+
     @media (max-width: 640px) {
       .domain { font-size: 3rem; }
       .domain-underline { width: 60px; margin: 0.7rem auto 0.8rem; }
@@ -594,9 +607,10 @@
 </head>
 <body>
   <div class="card">
+    <!-- 顶部域名品牌展示 -->
     <div class="domain-header">
       <div class="domain">
-        <span class="ido">i do</span><span class="ax">ax</span>
+        <span class="ido">i do</span><span class="ax">ax.com</span>
       </div>
       <div class="domain-underline"></div>
       <div class="domain-sub">
@@ -705,6 +719,7 @@
       </div>
     </div>
 
+    <!-- 底部与联系信息 -->
     <div class="footer-note">
       <div class="since-badge">
         <span>⏳</span> Since 2026 · 终身数字资产
@@ -718,11 +733,14 @@
         <span class="heart">❤️</span>
         <span style="color: #B8A898; font-weight: 400;">i do · a · x</span>
       </div>
+      <div style="margin-top: 0.4rem;">
+        <a href="mailto:admin@idoax.com" class="footer-email">✉️ admin@idoax.com</a>
+      </div>
     </div>
   </div>
 
   <script>
-    // GitHub API 绑定个人与仓库参数
+    // GitHub API 绑定参数
     const GITHUB_USER = 'leegeecn';
     const GITHUB_REPO = 'idoax.com';
 
