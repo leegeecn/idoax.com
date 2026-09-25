@@ -100,6 +100,44 @@
       }
     }
 
+    /* ===== 顶部美化图片相框 ===== */
+    .hero-banner-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-banner-wrapper {
+      position: relative;
+      padding: 8px;
+      background: rgba(255, 252, 248, 0.85);
+      border-radius: 32px;
+      border: 1px solid rgba(232, 205, 176, 0.6);
+      box-shadow: 
+        0 10px 30px -10px rgba(120, 90, 60, 0.08),
+        0 0 0 1px rgba(255, 255, 255, 0.9) inset;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .hero-banner-wrapper:hover {
+      transform: translateY(-4px);
+      box-shadow: 
+        0 18px 40px -12px rgba(140, 100, 60, 0.15),
+        0 0 0 1px rgba(255, 255, 255, 1) inset;
+    }
+
+    .hero-banner-img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 24px;
+      object-fit: cover;
+    }
+
     /* ===== 域名标题区 ===== */
     .domain-header {
       text-align: center;
@@ -584,6 +622,8 @@
     }
 
     @media (max-width: 640px) {
+      .hero-banner-wrapper { max-width: 100%; border-radius: 24px; padding: 6px; }
+      .hero-banner-img { border-radius: 18px; }
       .domain { font-size: 3rem; }
       .domain-underline { width: 60px; margin: 0.7rem auto 0.8rem; }
       .slogan-en { font-size: 1.3rem; }
@@ -600,13 +640,25 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    .domain-header, .explain-item, .slogan-card, .content-section, .footer-note {
+    .hero-banner-container, .domain-header, .explain-item, .slogan-card, .content-section, .footer-note {
       animation: fadeUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
     }
   </style>
 </head>
 <body>
   <div class="card">
+    
+    <!-- 顶部美化图片展示区 -->
+    <div class="hero-banner-container">
+      <div class="hero-banner-wrapper">
+        <img 
+          src="https://raw.githubusercontent.com/leegeecn/idoax.com/refs/heads/main/public/uploads/9864f566-2e8e-4257-ba26-f04823bdebb4.png" 
+          alt="idoax 家族形象" 
+          class="hero-banner-img"
+        />
+      </div>
+    </div>
+
     <!-- 顶部域名品牌展示 -->
     <div class="domain-header">
       <div class="domain">
@@ -766,19 +818,35 @@
 
     function parseFrontmatter(text) {
       const result = { body: '' };
-      const parts = text.split('---');
-      if (parts.length >= 3) {
-        const header = parts[1];
-        result.body = parts.slice(2).join('---').trim();
-        header.split('\n').forEach(line => {
-          const [key, ...val] = line.split(':');
-          if (key && val.length) {
-            result[key.trim()] = val.join(':').trim().replace(/^["']|["']$/g, '');
+      const lines = text.split(/\r?\n/);
+      let inHeader = false;
+      let headerLines = [];
+      let bodyLines = [];
+
+      lines.forEach((line, index) => {
+        if (line.trim() === '---') {
+          if (!inHeader && index === 0) {
+            inHeader = true;
+          } else if (inHeader) {
+            inHeader = false;
           }
-        });
-      } else {
-        result.body = text;
-      }
+        } else if (inHeader) {
+          headerLines.push(line);
+        } else {
+          bodyLines.push(line);
+        }
+      });
+
+      headerLines.forEach(line => {
+        const parts = line.split(':');
+        if (parts.length >= 2) {
+          const key = parts[0].trim();
+          const val = parts.slice(1).join(':').trim().replace(/^["']|["']$/g, '');
+          result[key] = val;
+        }
+      });
+
+      result.body = bodyLines.join('\n').trim();
       return result;
     }
 
@@ -796,7 +864,7 @@
             <span>${art.category || '记录'}</span>
           </div>
           <div class="article-title">${art.title || '未命名记录'}</div>
-          <div class="article-body">${art.body.substring(0, 80)}${art.body.length > 80 ? '...' : ''}</div>
+          <div class="article-body">${art.body ? art.body.substring(0, 100) + '...' : ''}</div>
         </div>
       `).join('');
     }
