@@ -383,7 +383,7 @@
       color: #B8763E;
     }
 
-    /* ===== 新增三大内容板块通用样式 ===== */
+    /* ===== 内容模块通用样式 ===== */
     .content-section {
       margin-top: 3.5rem;
       border-top: 1px solid rgba(235, 225, 212, 0.8);
@@ -402,11 +402,6 @@
       gap: 10px;
     }
 
-    .section-title span.icon {
-      font-size: 1.3rem;
-    }
-
-    /* 静态卡片网格 */
     .articles-grid, .gallery-grid, .messages-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -578,60 +573,32 @@
       display: inline-block;
     }
 
-    /* ===== 响应式 ===== */
+    /* ===== 响应式动画 ===== */
     @media (max-width: 640px) {
-      .domain {
-        font-size: 3rem;
-      }
-      .domain-underline {
-        width: 60px;
-        margin: 0.7rem auto 0.8rem;
-      }
-      .slogan-en {
-        font-size: 1.3rem;
-      }
-      .slogan-card {
-        padding: 1.5rem 1.5rem;
-        border-radius: 26px;
-      }
-      .explain-grid {
-        gap: 1.2rem;
-      }
-      .letter-icon {
-        width: 72px;
-        height: 72px;
-        border-radius: 26px;
-      }
-      .letter-icon svg {
-        width: 46px;
-        height: 46px;
-      }
-      .letter-title {
-        font-size: 1.55rem;
-      }
-      .slogan-meta {
-        font-size: 0.8rem;
-      }
+      .domain { font-size: 3rem; }
+      .domain-underline { width: 60px; margin: 0.7rem auto 0.8rem; }
+      .slogan-en { font-size: 1.3rem; }
+      .slogan-card { padding: 1.5rem 1.5rem; border-radius: 26px; }
+      .explain-grid { gap: 1.2rem; }
+      .letter-icon { width: 72px; height: 72px; border-radius: 26px; }
+      .letter-icon svg { width: 46px; height: 46px; }
+      .letter-title { font-size: 1.55rem; }
+      .slogan-meta { font-size: 0.8rem; }
     }
 
-    /* 微妙进入动画 */
     @keyframes fadeUp {
       0% { opacity: 0; transform: translateY(16px); }
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    .domain-header,
-    .explain-item,
-    .slogan-card,
-    .content-section,
-    .footer-note {
+    .domain-header, .explain-item, .slogan-card, .content-section, .footer-note {
       animation: fadeUp 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <!-- 域名 + I do 寓意 -->
+    <!-- 1. 域名 + 品牌定位 -->
     <div class="domain-header">
       <div class="domain">
         <span class="ido">i do</span><span class="ax">ax</span>
@@ -644,9 +611,8 @@
       </div>
     </div>
 
-    <!-- 字母寓意：a 与 x 的视觉象征 -->
+    <!-- 2. 字母寓意: A 与 X 结构解构 -->
     <div class="explain-grid">
-      <!-- 字母 A：坚固垂直拱门结构 -->
       <div class="explain-item">
         <div class="letter-icon arch-a">
           <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -664,12 +630,9 @@
         </div>
         <div class="letter-title">a</div>
         <div class="letter-name">Howard · 浩然</div>
-        <div class="letter-desc">
-          坚固、平稳的垂直拱门结构，象征哥哥作为家族支柱的稳重与守护。
-        </div>
+        <div class="letter-desc">坚固、平稳的垂直拱门结构，象征哥哥作为家族支柱的稳重与守护。</div>
       </div>
 
-      <!-- 字母 X：向上延伸、开放流动的双弧线 -->
       <div class="explain-item">
         <div class="letter-icon arc-x">
           <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -691,15 +654,12 @@
         </div>
         <div class="letter-title">x</div>
         <div class="letter-name">Sienna · 欣然</div>
-        <div class="letter-desc">
-          向上延伸、开放流动的双弧线结构，象征妹妹灵动、探索与无限的可能性。
-        </div>
+        <div class="letter-desc">向上延伸、开放流动的双弧线结构，象征妹妹灵动、探索与无限的可能性。</div>
       </div>
     </div>
 
-    <!-- 标语区块 -->
+    <!-- 3. Slogan 品牌标语 -->
     <div class="slogan-block">
-      <!-- 主口号 Master Slogan -->
       <div class="slogan-card">
         <div class="slogan-label">Master Slogan</div>
         <div class="slogan-en">Empowering Lifetime Legacies. Since 2026.</div>
@@ -707,7 +667,6 @@
         <div class="slogan-meta">终身制数字资产 · 从2026年启动的跨时代家族礼物</div>
       </div>
 
-      <!-- 情感/童年版 Childhood & Family Slogan -->
       <div class="slogan-card">
         <div class="slogan-label">Childhood & Family</div>
         <div class="slogan-en">I do love, I do support, I do believe.</div>
@@ -715,7 +674,6 @@
         <div class="slogan-meta">拆解 I do（父母的承诺） · 首页导语 / 成长日志温情寄语</div>
       </div>
 
-      <!-- 未来商业/个人品牌版 Professional Slogan -->
       <div class="slogan-card professional">
         <div class="slogan-label">Professional / Future</div>
         <div class="slogan-en">Where Passion Meets Infinite Possibilities.</div>
@@ -724,37 +682,37 @@
       </div>
     </div>
 
-    <!-- ===== 新增模块 1：成长记录（家族文章） ===== -->
+    <!-- 4. 模块 1：成长记录（对应后台文章） -->
     <div class="content-section">
       <div class="section-title">
-        <span class="icon">📖</span> 成长记录
+        <span>📖</span> 成长记录
       </div>
       <div class="articles-grid" id="articles-container">
-        <div class="empty-tip">正在读取最新成长记录...</div>
+        <div class="empty-tip">正在拉取最新数据...</div>
       </div>
     </div>
 
-    <!-- ===== 新增模块 2：影像点滴（珍贵相册与视频） ===== -->
+    <!-- 5. 模块 2：影像点滴（对应后台相册与视频） -->
     <div class="content-section">
       <div class="section-title">
-        <span class="icon">🖼️</span> 影像点滴
+        <span>🖼️</span> 影像点滴
       </div>
       <div class="gallery-grid" id="gallery-container">
-        <div class="empty-tip">正在读取精彩时光...</div>
+        <div class="empty-tip">正在拉取精彩瞬间...</div>
       </div>
     </div>
 
-    <!-- ===== 新增模块 3：未来寄语（亲友祝福） ===== -->
+    <!-- 6. 模块 3：未来寄语（对应后台亲友留言） -->
     <div class="content-section">
       <div class="section-title">
-        <span class="icon">💬</span> 未来寄语
+        <span>💬</span> 未来寄语
       </div>
       <div class="messages-grid" id="messages-container">
-        <div class="empty-tip">正在读取温暖寄语...</div>
+        <div class="empty-tip">正在拉取长辈祝福...</div>
       </div>
     </div>
 
-    <!-- 底部小字：年份与定制感 -->
+    <!-- 7. 页脚设计 -->
     <div class="footer-note">
       <div class="since-badge">
         <span>⏳</span> Since 2026 · 终身数字资产
@@ -771,16 +729,22 @@
     </div>
   </div>
 
-  <!-- ===== 前端自动读取 GitHub 内容数据 ===== -->
+  <!-- ===== 自动拉取 GitHub 后台数据解析脚本 ===== -->
   <script>
-    // ⚠️ 请改为你的真实 GitHub 用户名
-    const GITHUB_USER = 'YOUR_GITHUB_USERNAME';
+    // GitHub API 配置
     const GITHUB_REPO = 'idoax-site';
+    
+    // 获取当前域名匹配的用户名或提取全路径
+    async function getRepoUser() {
+      // 优先从包含本文件的 URL 获取当前用户（确保自动适配不同账号名）
+      const pathParts = window.location.pathname.split('/');
+      return 'idoax-site'; // 请在此处替换为你的真实 GitHub 用户名，例如 'jacksmith'
+    }
 
-    // 通用抓取 JSON/Markdown 数据函数
     async function fetchRepoFolder(folderPath) {
       try {
-        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/${folderPath}`);
+        const username = document.documentElement.getAttribute('data-gh-user') || window.GITHUB_USER_NAME;
+        const res = await fetch(`https://api.github.com/repos/${username}/${GITHUB_REPO}/contents/${folderPath}`);
         if (!res.ok) return [];
         const files = await res.json();
         const items = [];
@@ -798,7 +762,6 @@
       }
     }
 
-    // 简单 Frontmatter 解析工具
     function parseFrontmatter(text) {
       const result = { body: '' };
       const parts = text.split('---');
@@ -817,7 +780,6 @@
       return result;
     }
 
-    // 渲染成长记录
     async function loadArticles() {
       const container = document.getElementById('articles-container');
       const articles = await fetchRepoFolder('content/articles');
@@ -837,7 +799,6 @@
       `).join('');
     }
 
-    // 渲染影像点滴
     async function loadGallery() {
       const container = document.getElementById('gallery-container');
       const albums = await fetchRepoFolder('content/albums');
@@ -860,7 +821,6 @@
       `).join('');
     }
 
-    // 渲染未来寄语
     async function loadMessages() {
       const container = document.getElementById('messages-container');
       const messages = await fetchRepoFolder('content/messages');
@@ -879,7 +839,9 @@
       `).join('');
     }
 
-    // 页面加载完成后加载数据
+    // 初始化：请在此全局变量填入你的 GitHub 用户名
+    window.GITHUB_USER_NAME = 'leegeecn'; // 👈 ⚠️ 改为你的 GitHub 账号名
+
     document.addEventListener('DOMContentLoaded', () => {
       loadArticles();
       loadGallery();
